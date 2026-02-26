@@ -1,6 +1,6 @@
 {
   "name": "powerhoof",
-  "version": "0.1.0",
+  "version": "0.11.0",
   "description": "Azure-native AI agent with Nushell execution for token-efficient task automation",
   "type": "module",
   "main": "dist/index.js",
