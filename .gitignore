@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Azure
+.azure/
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Test coverage
+coverage/
+.vitest/
+test-results/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Docker artifacts
+*.tar.gz
+
+# Editor swap files
+*.swp
+*.swo
+
+# Windows
+Desktop.ini
+start-err.txt
+start-out.txt
+startup-output.txt
+stderr.txt
+stdout.txt
+tsc-output.txt

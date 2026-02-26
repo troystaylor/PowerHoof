@@ -1,0 +1,22 @@
+{
+  "providers": {
+    "azure": {
+      "type": "azure-openai",
+      "endpoint": "${AZURE_OPENAI_ENDPOINT}",
+      "apiKey": "${AZURE_OPENAI_API_KEY}",
+      "deploymentId": "${AZURE_OPENAI_DEPLOYMENT}",
+      "apiVersion": "2024-08-01-preview"
+    }
+  },
+  "server": {
+    "port": 3000,
+    "host": "0.0.0.0",
+    "corsOrigins": ["*"]
+  },
+  "agent": {
+    "primaryModel": "azure/${AZURE_OPENAI_DEPLOYMENT}",
+    "maxConcurrentTasks": 4,
+    "maxSubagents": 8,
+    "compactionMode": "safeguard"
+  }
+}

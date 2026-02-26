@@ -1,0 +1,31 @@
+{
+  "providers": {
+    "mock": {
+      "type": "azure-openai",
+      "endpoint": "https://mock-openai.openai.azure.com",
+      "useManagedIdentity": false,
+      "models": [
+        {
+          "id": "gpt-4o",
+          "name": "GPT-4o",
+          "reasoning": false,
+          "contextWindow": 128000,
+          "maxTokens": 4096,
+          "input": ["text"],
+          "cost": { "input": 2.5, "output": 10 }
+        }
+      ]
+    }
+  },
+  "server": {
+    "port": 3000,
+    "host": "0.0.0.0",
+    "corsOrigins": ["*"]
+  },
+  "agent": {
+    "primaryModel": "mock/gpt-4o",
+    "maxConcurrentTasks": 4,
+    "maxSubagents": 8,
+    "compactionMode": "safeguard"
+  }
+}

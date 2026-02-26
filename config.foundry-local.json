@@ -1,0 +1,20 @@
+{
+  "providers": {
+    "local": {
+      "type": "foundry-local",
+      "modelAlias": "phi-3.5-mini",
+      "modelTtl": 600
+    }
+  },
+  "server": {
+    "port": 3000,
+    "host": "0.0.0.0",
+    "corsOrigins": ["*"]
+  },
+  "agent": {
+    "primaryModel": "local/phi-3.5-mini",
+    "maxConcurrentTasks": 4,
+    "maxSubagents": 8,
+    "compactionMode": "safeguard"
+  }
+}

@@ -1,0 +1,56 @@
+# Nushell Quick Reference for PowerHoof Agent
+
+## Core Commands
+
+### File Operations
+| Command | Description | Example |
+|---------|-------------|---------|
+| `open` | Read file contents | `open data.json` |
+| `save` | Write to file | `$data | save output.json` |
+| `ls` | List directory | `ls src/` |
+| `cd` | Change directory | `cd project/` |
+| `cp` | Copy file | `cp source.txt dest.txt` |
+| `mv` | Move/rename file | `mv old.txt new.txt` |
+| `rm` | Remove file | `rm temp.txt` |
+
+### Data Transformation
+| Command | Description | Example |
+|---------|-------------|---------|
+| `select` | Pick columns | `$data | select name, age` |
+| `where` | Filter rows | `$data | where age > 21` |
+| `sort-by` | Sort data | `$data | sort-by name` |
+| `group-by` | Group data | `$data | group-by category` |
+| `uniq` | Remove duplicates | `$data | uniq` |
+
+### HTTP Requests
+| Command | Description | Example |
+|---------|-------------|---------|
+| `http get` | GET request | `http get https://api.example.com/users` |
+| `http post` | POST request | `http post https://api.example.com/users { name: "John" }` |
+
+### Data Formats
+| Command | Description | Example |
+|---------|-------------|---------|
+| `from json` | Parse JSON | `'{"a":1}' | from json` |
+| `to json` | Convert to JSON | `{a: 1} | to json` |
+| `from csv` | Parse CSV | `open data.csv | from csv` |
+| `to csv` | Convert to CSV | `$data | to csv` |
+
+## Pipeline Example
+```nushell
+# Fetch users, filter active, select fields, save
+http get https://api.example.com/users 
+  | where status == "active" 
+  | select name, email, created_at
+  | sort-by created_at --reverse
+  | save active_users.json
+```
+
+## Why This Saves Tokens
+
+Traditional MCP tools require ~250 tokens per tool schema. With 20 tools = 5000+ tokens overhead.
+
+Nushell commands:
+- Are self-documenting
+- Chain via pipelines (one request vs multiple)
+- ~250 tokens for entire reference vs 5000+ for MCP

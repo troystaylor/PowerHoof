@@ -1,0 +1,24 @@
+{
+  "providers": {
+    "local": {
+      "type": "foundry-local",
+      "modelAlias": "qwen2.5-0.5b",
+      "modelTtl": 600
+    }
+  },
+  "nushell": {
+    "executorType": "local",
+    "executionTimeoutMs": 30000
+  },
+  "server": {
+    "port": 3000,
+    "host": "0.0.0.0",
+    "corsOrigins": ["*"]
+  },
+  "agent": {
+    "primaryModel": "local/qwen2.5-0.5b",
+    "maxConcurrentTasks": 4,
+    "maxSubagents": 8,
+    "compactionMode": "safeguard"
+  }
+}
