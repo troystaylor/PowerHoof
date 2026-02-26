@@ -130,7 +130,10 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Login to Azure Container Registry
+        if: ${{ secrets.ACR_USERNAME != '' }}
         uses: azure/docker-login@v1
+        continue-on-error: true
+        id: acr-login
         with:
           login-server: ${{ env.ACR_REGISTRY }}
           username: ${{ secrets.ACR_USERNAME }}
@@ -147,7 +150,22 @@ jobs:
         id: version
         run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
 
-      - name: Build and push Docker image
+      - name: Build and push to GHCR
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.GHCR_REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
+            ${{ env.GHCR_REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          labels: |
+            org.opencontainers.image.version=${{ steps.version.outputs.VERSION }}
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+
+      - name: Push to ACR
+        if: ${{ steps.acr-login.outcome == 'success' }}
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -155,8 +173,6 @@ jobs:
           tags: |
             ${{ env.ACR_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
             ${{ env.ACR_REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-            ${{ env.GHCR_REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
-            ${{ env.GHCR_REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
           labels: |
